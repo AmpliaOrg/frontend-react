@@ -1,0 +1,72 @@
+Aqui está um Prompt Estruturado pronto para você copiar e colar em IAs geradoras de código (como ChatGPT, Claude, v0.dev ou Bolt) ou para passar a um designer.
+
+Ele consolida a identidade visual dos arquivos que você enviou (PDF/Imagens) com o texto descritivo do projeto.
+
+📋 Prompt Mestre para Landing Page (Amplia)
+Copie e cole o texto abaixo:
+
+Atue como um Especialista em UI/UX e Desenvolvedor Front-end Sênior (foco em Angular e Tailwind CSS).
+
+Projeto: Landing Page da Amplia, uma plataforma de conexão entre ONGs, voluntários e empresas para impacto social.
+
+Identidade Visual (Baseada nos Anexos):
+
+Paleta de Cores: Foco em tons de Verde (Natureza/Confiança) e Branco/Cinza Claro (Limpeza).
+
+Primária: Verde Esmeralda Suave (similar aos elementos de "Hortas Sustentáveis").
+
+Fundo: Off-white ou cinza muito claro para destacar os cards.
+
+Estilo: Minimalista, "Clean Tech", cantos arredondados (Rounded-XL nos botões e cards), tipografia sem serifa moderna (estilo Poppins ou Inter).
+
+Vibe: "O sério não precisa ser complicado". Transparência e acessibilidade.
+
+Estrutura da Página (Seções Obrigatórias):
+
+Header (Navegação):
+
+Logo: Ícone circular verde com linhas radiantes (estilo "leque").
+
+Links: Sobre, ONGs, Voluntários, Empresas.
+
+CTA Principal: Botão "Quero Participar" (destaque verde).
+
+Hero Section (Dobra Principal):
+
+Headline: "Amplia: conectando pessoas, ONGs e empresas para gerar impacto social."
+
+Subheadline: "O sério não precisa ser complicado. Uma ponte digital entre quem quer ajudar e quem precisa ser ajudado."
+
+Visual: Ilustração flat de pessoas colaborando ou foto estilo "cinemática" de trabalho voluntário no campo.
+
+CTA: Botões segmentados: "Sou ONG", "Sou Voluntário", "Sou Empresa".
+
+Como Funciona (Tríade):
+
+Cards explicando os 3 pilares:
+
+ONGs: Cadastro transparente e validação.
+
+Voluntários: Conexão com propósitos e Certificados Digitais.
+
+Empresas: Patrocínio rastreável e ESG.
+
+Prova Social / Estudo de Caso (Baseado no exemplo "AgroAjuda"):
+
+Crie um Card de destaque visual mostrando o projeto "Hortas Sustentáveis".
+
+Elemento Chave: Uma barra de progresso verde mostrando "R$ 14.000,00 arrecadados de R$ 25.000,00".
+
+Elemento de Vaga: Um card menor ao lado "Assistente de hortas - Vagas: 5 - Inscrever-se".
+
+Objetivo: Mostrar a transparência financeira e os editais de voluntariado na prática.
+
+Diferenciais Técnicos:
+
+Ícones minimalistas mencionando: Doações Rastreáveis, Certificados Digitais (Gamificação) e Dashboards de Metas.
+
+Rodapé:
+
+Links rápidos, selo de "ONG Verificada", Copyright Amplia.
+
+Requisito Técnico de Saída: Gere o código HTML estruturado com classes do Tailwind CSS. O design deve ser responsivo e pronto para implementação em um projeto Angular.
