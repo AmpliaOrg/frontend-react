@@ -27,7 +27,10 @@ export interface AuthResponse {
   role: string;
   token: string;
   message?: string;
+  firstName?: string;
+  lastName?: string;
 }
+
 
 export interface DonationDTO {
   guid?: string;
@@ -76,6 +79,30 @@ export interface DashboardStats {
   activeProjects: number;
 }
 
+export interface UserProfileDTO {
+  guid?: string;
+  userGuid: string;
+  bio?: string;
+  age?: number;
+  location?: string;
+  skills?: string;
+  hobbies?: string;
+  interests?: string;
+  tags?: string[];
+  avatarUrl?: string;
+  socialLinks?: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+export interface Page<T> {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+}
+
 // API Client
 class ApiClient {
   private getHeaders(): HeadersInit {
@@ -97,7 +124,17 @@ class ApiClient {
       throw new Error(error.message || `HTTP ${response.status}`);
     }
 
-    return response.json();
+    const json = await response.json();
+    
+    // Check if it's our new ApiResponse format
+    if (json && typeof json === 'object' && 'code' in json && 'success' in json && 'model' in json) {
+        if (!json.success) {
+            throw new Error(json.errorMessage || 'Request failed');
+        }
+        return json.model;
+    }
+
+    return json;
   }
 
   // Auth
@@ -181,6 +218,42 @@ class ApiClient {
 
   async getVolunteerCertificates(volunteerGuid: string): Promise<any[]> {
     return this.request<any[]>(`/certificates/volunteer/${volunteerGuid}`);
+  }
+
+  // User Profiles
+  async getUserProfile(userGuid: string): Promise<UserProfileDTO> {
+    return this.request<UserProfileDTO>(`/profiles/${userGuid}`);
+  }
+
+  async createOrUpdateProfile(data: UserProfileDTO): Promise<UserProfileDTO> {
+    if (data.guid) {
+        return this.request<UserProfileDTO>(`/profiles/${data.userGuid}`, {
+            method: 'PUT',
+            body: JSON.stringify(data)
+        });
+    } else {
+        return this.request<UserProfileDTO>('/profiles', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        });
+    }
+  }
+
+  async searchProfilesByTag(tag: string): Promise<UserProfileDTO[]> {
+    return this.request<UserProfileDTO[]>(`/profiles/search?tag=${encodeURIComponent(tag)}`);
+  }
+
+  async getAllTags(): Promise<string[]> {
+    return this.request<string[]>('/profiles/tags');
+  }
+
+  async getVolunteers(tag?: string, page = 0, size = 10): Promise<Page<UserProfileDTO>> {
+    const query = new URLSearchParams();
+    if (tag && tag !== "all") query.append("tag", tag);
+    query.append("page", page.toString());
+    query.append("size", size.toString());
+    
+    return this.request<Page<UserProfileDTO>>(`/profiles/volunteers?${query.toString()}`);
   }
 }
 
