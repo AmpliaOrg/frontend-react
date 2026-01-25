@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
-import logo from "@assets/Amplia_1764618105352.png";
+import logo from "@assets/Amplia.svg";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -58,8 +58,8 @@ export default function Login() {
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/10 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-2xl">
         <CardHeader className="space-y-4 text-center">
-          <div className="mx-auto h-16 w-16 overflow-hidden rounded-full bg-primary/10 p-3">
-            <img src={logo} alt="Amplia Logo" className="h-full w-full object-contain" />
+          <div className="mx-auto h-16 w-16 overflow-hidden rounded-full">
+            <img src={logo} alt="Amplia Logo" className="h-full w-full object-cover" />
           </div>
           <div>
             <CardTitle className="text-3xl font-display font-bold">Bem-vindo</CardTitle>

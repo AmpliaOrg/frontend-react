@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import logo from "@assets/Amplia_1764618105352.png";
+import logo from "@assets/Amplia.svg";
 
 export function Navbar() {
   return (
@@ -9,8 +9,8 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <Link href="/">
             <a className="flex items-center gap-2 transition-opacity hover:opacity-80">
-              <div className="h-10 w-10 overflow-hidden rounded-full bg-primary/10 p-1.5">
-                <img src={logo} alt="Amplia Logo" className="h-full w-full object-contain" />
+              <div className="h-10 w-10 overflow-hidden rounded-full">
+                <img src={logo} alt="Amplia Logo" className="h-full w-full object-cover" />
               </div>
               <span className="font-display text-xl font-bold tracking-tight text-foreground">Amplia</span>
             </a>

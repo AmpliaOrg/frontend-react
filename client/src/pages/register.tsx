@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "@/lib/api";
-import logo from "@assets/Amplia_1764618105352.png";
+import logo from "@assets/Amplia.svg";
 
 const registerSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -106,8 +106,8 @@ export default function Register() {
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/10 flex items-center justify-center p-4">
       <Card className="w-full max-w-2xl shadow-2xl">
         <CardHeader className="space-y-4 text-center">
-          <div className="mx-auto h-16 w-16 overflow-hidden rounded-full bg-primary/10 p-3">
-            <img src={logo} alt="Amplia Logo" className="h-full w-full object-contain" />
+          <div className="mx-auto h-16 w-16 overflow-hidden rounded-full">
+            <img src={logo} alt="Amplia Logo" className="h-full w-full object-cover" />
           </div>
           <div>
             <CardTitle className="text-3xl font-display font-bold">Criar Conta</CardTitle>

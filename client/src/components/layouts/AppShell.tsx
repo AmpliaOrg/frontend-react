@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
   LogOut,
   Menu,
@@ -10,7 +11,9 @@ import {
   LucideIcon
 } from "lucide-react";
 import { useState } from "react";
-import logo from "@assets/Amplia_1764618105352.png";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
+import logo from "@assets/Amplia.svg";
 
 interface NavItem {
   label: string;
@@ -29,6 +32,14 @@ export default function AppShell({ children, navItems, title }: AppShellProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
 
+  // Fetch user profile to get avatar
+  const { data: userProfile } = useQuery({
+    queryKey: ['userProfile', user?.userId],
+    queryFn: () => api.getUserProfile(user!.userId),
+    enabled: !!user?.userId,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+  });
+
   // Helper to check active route
   const isActive = (path: string) => location === path;
 
@@ -40,8 +51,8 @@ export default function AppShell({ children, navItems, title }: AppShellProps) {
   const NavContent = () => (
     <div className="flex flex-col h-full bg-sidebar-background border-r border-border">
       <div className="h-20 flex items-center gap-3 px-6 border-b border-border/40">
-        <div className="h-8 w-8 overflow-hidden rounded-full bg-primary/10 p-1">
-          <img src={logo} alt="Amplia Logo" className="h-full w-full object-contain" />
+        <div className="h-8 w-8 overflow-hidden rounded-full">
+          <img src={logo} alt="Amplia Logo" className="h-full w-full object-cover" />
         </div>
         <span className="font-display text-xl font-bold tracking-tight text-foreground">Amplia</span>
       </div>
@@ -64,13 +75,23 @@ export default function AppShell({ children, navItems, title }: AppShellProps) {
       </div>
 
       <div className="p-4 border-t border-border/40 mt-auto">
-        <div className="flex items-center gap-3 p-2 rounded-xl bg-muted/50 mb-2">
-            <div className={`h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold overflow-hidden`}>
-                {(user?.firstName?.charAt(0) || user?.email?.charAt(0) || "U").toUpperCase()}
-            </div>
+        <div 
+          className="flex items-center gap-3 p-2 rounded-xl bg-muted/50 mb-2 cursor-pointer hover:bg-muted transition-colors"
+          onClick={() => handleNavigation('/profile')}
+        >
+            <Avatar className="h-10 w-10 border-2 border-primary/10">
+              <AvatarImage src={userProfile?.avatarUrl} alt="Profile" />
+              <AvatarFallback className="bg-primary/20 text-primary font-bold">
+                {user?.firstName?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase() || "U"}
+              </AvatarFallback>
+            </Avatar>
             <div className="overflow-hidden flex-1">
-                <p className="text-sm font-medium truncate">{user?.firstName || user?.email}</p>
-                <p className="text-xs text-muted-foreground truncate">{user?.role}</p>
+                <p className="text-sm font-medium truncate">
+                    {user?.firstName && user?.lastName 
+                        ? `${user.firstName} ${user.lastName}` 
+                        : user?.firstName || user?.email || "Usuário"}
+                </p>
+                <p className="text-xs text-muted-foreground truncate">{user?.role || "USER"}</p>
             </div>
         </div>
         <Button 
