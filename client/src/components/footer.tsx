@@ -13,7 +13,7 @@ export function Footer() {
             <Link href="/">
               <a className="flex items-center gap-2 transition-opacity hover:opacity-80">
                 <div className="h-8 w-8 overflow-hidden rounded-full">
-                  <img src={logo} alt="Amplia Logo" className="h-full w-full object-cover" />
+                  <img src={logo} alt="Amplia Logo" className="h-full w-full object-contain" />
                 </div>
                 <span className="font-display text-xl font-bold tracking-tight text-foreground">Amplia</span>
               </a>
