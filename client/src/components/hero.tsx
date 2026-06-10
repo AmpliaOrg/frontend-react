@@ -15,10 +15,6 @@ export function Hero() {
               transition={{ duration: 0.5 }}
               className="space-y-4"
             >
-              <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
-                <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
-                Plataforma de Impacto Social
-              </div>
               <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl xl:text-6xl/none">
                 Amplia: conectando pessoas, ONGs e empresas.
               </h1>

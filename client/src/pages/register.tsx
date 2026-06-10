@@ -85,7 +85,17 @@ export default function Register() {
         title: "Cadastro realizado!",
         description: "Bem-vindo ao Amplia.",
       });
-      setLocation("/dashboard");
+
+      // Redirect based on user role
+      if (response.role === 'VOLUNTEER') {
+        setLocation("/volunteer/dashboard", { replace: true });
+      } else if (response.role === 'USER') {
+        setLocation("/donor/dashboard", { replace: true });
+      } else if (response.role === 'ONG' || response.role === 'ADMIN') {
+        setLocation("/ong/dashboard", { replace: true });
+      } else {
+        setLocation("/", { replace: true });
+      }
     } catch (error: any) {
       toast({
         title: "Erro no cadastro",

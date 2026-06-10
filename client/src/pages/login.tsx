@@ -32,16 +32,23 @@ export default function Login() {
     setIsLoading(true);
     try {
       const response = await login(data.email, data.password);
+      console.log("Login response:", response);
       toast({
         title: "Login realizado!",
         description: "Bem-vindo de volta.",
       });
       
       // Redirect based on user role
+      console.log("Redirecting user with role:", response.role);
       if (response.role === 'VOLUNTEER') {
-        setLocation("/volunteer-dashboard");
+        setLocation("/volunteer/dashboard", { replace: true });
+      } else if (response.role === 'USER') {
+        setLocation("/donor/dashboard", { replace: true });
+      } else if (response.role === 'ONG' || response.role === 'ADMIN') {
+        setLocation("/ong/dashboard", { replace: true });
       } else {
-        setLocation("/dashboard");
+        console.log("No specific dashboard for role, redirecting to home");
+        setLocation("/", { replace: true });
       }
     } catch (error: any) {
       toast({

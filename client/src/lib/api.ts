@@ -202,6 +202,15 @@ class ApiClient {
     return this.request<ProjectDTO>(`/projects/${guid}`);
   }
 
+  // ONGs
+  async getAllOngs(): Promise<any[]> {
+    return this.request<any[]>('/ongs');
+  }
+
+  async getOngById(id: string): Promise<any> {
+    return this.request<any>(`/ongs/${id}`);
+  }
+
   // Dashboard
   async getDashboardStats(groupId: number): Promise<DashboardStats> {
     return this.request<DashboardStats>(`/dashboard/stats/${groupId}`);

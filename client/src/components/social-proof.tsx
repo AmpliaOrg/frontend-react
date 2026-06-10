@@ -15,9 +15,6 @@ export function SocialProof() {
           {/* Left Content */}
           <div className="space-y-8">
             <div>
-              <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5 text-primary px-4 py-1 text-sm rounded-full">
-                Estudo de Caso
-              </Badge>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl font-display mb-6">
                 Transparência que gera confiança.
               </h2>

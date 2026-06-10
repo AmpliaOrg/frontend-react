@@ -1,8 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import logo from "@assets/Amplia.svg";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function Navbar() {
+  const { user, isAuthenticated } = useAuth();
+  
+  const getDashboardUrl = () => {
+    if (user?.role === 'VOLUNTEER') return '/volunteer/dashboard';
+    if (user?.role === 'USER') return '/donor/dashboard';
+    return '/ong/dashboard';
+  };
+
+  const dashboardUrl = getDashboardUrl();
+
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
@@ -33,14 +44,14 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link href="/dashboard">
+          <Link href="/login">
             <Button variant="ghost" className="hidden md:inline-flex">
               Entrar
             </Button>
           </Link>
-          <Link href="/dashboard">
+          <Link href="/register">
             <Button className="rounded-full px-6 font-semibold shadow-lg shadow-primary/20 transition-all hover:shadow-primary/40">
-              Quero Participar
+              Cadastre-se
             </Button>
           </Link>
         </div>

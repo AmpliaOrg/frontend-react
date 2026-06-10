@@ -34,6 +34,7 @@ export function getPoliciesForRole(role: string): string[] {
       return [
         SecurityConstants.POLICY_PROJECT_READ,
         SecurityConstants.POLICY_DONATION_WRITE,
+        SecurityConstants.POLICY_VOLUNTEER_READ,
       ];
       
     default:

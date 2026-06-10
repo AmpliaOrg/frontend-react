@@ -38,11 +38,11 @@ export default function Dashboard() {
   };
 
   const navItems = [
-    { href: "/dashboard", label: "Início", icon: LayoutDashboard },
-    { href: "/dashboard/financial", label: "Financeiro", icon: Wallet },
+    { href: "/ong/dashboard", label: "Início", icon: LayoutDashboard },
+    { href: "/ong/financial", label: "Financeiro", icon: Wallet },
     { href: "/ong/volunteers", label: "Voluntários", icon: Users },
     { href: "/ong/projects", label: "Projetos", icon: Heart },
-    { href: "/dashboard/settings", label: "Configurações", icon: Settings },
+    { href: "/ong/settings", label: "Configurações", icon: Settings },
   ];
 
   const handleNavigation = (path: string) => {
@@ -58,7 +58,7 @@ export default function Dashboard() {
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
       hoverColor: "hover:bg-blue-500/20",
-      path: "/dashboard/stats"
+      path: "/ong/stats"
     },
     {
       title: "Financeiro",
@@ -67,7 +67,7 @@ export default function Dashboard() {
       color: "text-emerald-500",
       bgColor: "bg-emerald-500/10",
       hoverColor: "hover:bg-emerald-500/20",
-      path: "/dashboard/financial"
+      path: "/ong/financial"
     },
     {
       title: "Voluntários",
@@ -76,7 +76,7 @@ export default function Dashboard() {
       color: "text-purple-500",
       bgColor: "bg-purple-500/10",
       hoverColor: "hover:bg-purple-500/20",
-      path: "/dashboard/volunteers"
+      path: "/ong/volunteers"
     },
     {
       title: "Projetos",
@@ -85,7 +85,7 @@ export default function Dashboard() {
       color: "text-rose-500",
       bgColor: "bg-rose-500/10",
       hoverColor: "hover:bg-rose-500/20",
-      path: "/dashboard/projects"
+      path: "/ong/projects"
     },
     {
       title: "Configurações",
@@ -94,7 +94,7 @@ export default function Dashboard() {
       color: "text-amber-500",
       bgColor: "bg-amber-500/10",
       hoverColor: "hover:bg-amber-500/20",
-      path: "/dashboard/settings"
+      path: "/ong/settings"
     }
   ];
 
