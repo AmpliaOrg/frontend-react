@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import logo from "@assets/Amplia.svg";
 import { useAuth } from "@/contexts/AuthContext";
 
 export function Navbar() {
   const { user, isAuthenticated } = useAuth();
+  const [location] = useLocation();
   
   const getDashboardUrl = () => {
     if (user?.role === 'VOLUNTEER') return '/volunteer/dashboard';
@@ -13,6 +14,15 @@ export function Navbar() {
   };
 
   const dashboardUrl = getDashboardUrl();
+
+  const getLinkClass = (path: string) => {
+    const isActive = location === path;
+    return `text-sm transition-colors ${
+      isActive 
+        ? "text-primary font-bold" 
+        : "text-muted-foreground hover:text-primary font-medium"
+    }`;
+  };
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
@@ -29,18 +39,31 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-8 md:flex">
-          <a href="#sobre" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-            Sobre
-          </a>
-          <a href="#ongs" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-            ONGs
-          </a>
-          <a href="#voluntarios" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-            Voluntários
-          </a>
-          <a href="#empresas" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-            Empresas
-          </a>
+          <Link href="/">
+            <a className={getLinkClass("/")}>
+              Sobre
+            </a>
+          </Link>
+          <Link href="/ong/interesse">
+            <a className={getLinkClass("/ong/interesse")}>
+              ONGs
+            </a>
+          </Link>
+          <Link href="/voluntario/interesse">
+            <a className={getLinkClass("/voluntario/interesse")}>
+              Voluntários
+            </a>
+          </Link>
+          <Link href="/empresa/interesse">
+            <a className={getLinkClass("/empresa/interesse")}>
+              Empresas
+            </a>
+          </Link>
+          <Link href="/fale-conosco">
+            <a className={getLinkClass("/fale-conosco")}>
+              Fale Conosco
+            </a>
+          </Link>
         </div>
 
         <div className="flex items-center gap-4">

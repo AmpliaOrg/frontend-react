@@ -12,6 +12,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "@/lib/api";
 import logo from "@assets/Amplia.svg";
+import { ArrowLeft } from "lucide-react";
+
 
 const registerSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -113,7 +115,17 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/10 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/10 flex flex-col items-center justify-center p-4">
+      <div className="w-full max-w-2xl mb-4 flex justify-start">
+        <Button 
+          variant="ghost" 
+          className="group rounded-full hover:bg-muted/80 text-muted-foreground hover:text-foreground"
+          onClick={() => setLocation("/")}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
+          Voltar para o início
+        </Button>
+      </div>
       <Card className="w-full max-w-2xl shadow-2xl">
         <CardHeader className="space-y-4 text-center">
           <div className="mx-auto h-16 w-16 overflow-hidden rounded-full">

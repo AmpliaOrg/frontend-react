@@ -23,6 +23,10 @@ import OngProfile from "@/pages/ong/Profile";
 import Dashboard from "@/pages/dashboard";
 import Login from "@/pages/login";
 import Register from "@/pages/register";
+import LeadCapture from "@/pages/ong/LeadCapture";
+import ContactUs from "@/pages/contact";
+import VolunteerInterest from "@/pages/volunteer/Interest";
+import CompanyInterest from "@/pages/company/Interest";
 import { ProtectedRouteWrapper } from "@/lib/protected-route";
 import { SecurityConstants } from "@/lib/security-constants";
 
@@ -32,6 +36,10 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Route path="/ong/interesse" component={LeadCapture} />
+      <Route path="/fale-conosco" component={ContactUs} />
+      <Route path="/voluntario/interesse" component={VolunteerInterest} />
+      <Route path="/empresa/interesse" component={CompanyInterest} />
       
       {/* ONG Routes */}
       <Route path="/ong/dashboard">

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Heart, Briefcase, Building2 } from "lucide-react";
 import heroImage from "@assets/generated_images/volunteers_working_in_a_field.png";
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 
 export function Hero() {
   return (
@@ -29,18 +30,24 @@ export function Hero() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="flex flex-col gap-4 sm:flex-row"
             >
-              <Button size="lg" className="group relative overflow-hidden rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 h-14 px-8">
-                <Heart className="mr-2 h-5 w-5" />
-                Sou ONG
-                <span className="absolute inset-0 flex items-center justify-center bg-white/20 opacity-0 transition-opacity group-hover:opacity-100"></span>
-              </Button>
-              <Button size="lg" variant="outline" className="rounded-xl h-14 px-8 border-primary/20 hover:bg-primary/5 hover:text-primary hover:border-primary">
-                <ArrowRight className="mr-2 h-5 w-5" />
-                Sou Voluntário
-              </Button>
-              <Button size="lg" variant="ghost" className="rounded-xl h-14 px-8 text-muted-foreground hover:text-foreground">
-                Sou Empresa
-              </Button>
+              <Link href="/ong/interesse">
+                <Button size="lg" className="group relative overflow-hidden rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 h-14 px-8 cursor-pointer w-full sm:w-auto">
+                  <Heart className="mr-2 h-5 w-5" />
+                  Sou ONG
+                  <span className="absolute inset-0 flex items-center justify-center bg-white/20 opacity-0 transition-opacity group-hover:opacity-100"></span>
+                </Button>
+              </Link>
+              <Link href="/voluntario/interesse">
+                <Button size="lg" variant="outline" className="rounded-xl h-14 px-8 border-primary/20 hover:bg-primary/5 hover:text-primary hover:border-primary cursor-pointer w-full sm:w-auto">
+                  <ArrowRight className="mr-2 h-5 w-5" />
+                  Sou Voluntário
+                </Button>
+              </Link>
+              <Link href="/empresa/interesse">
+                <Button size="lg" variant="ghost" className="rounded-xl h-14 px-8 text-muted-foreground hover:text-foreground cursor-pointer w-full sm:w-auto">
+                  Sou Empresa
+                </Button>
+              </Link>
             </motion.div>
             
             <div className="flex items-center gap-4 text-sm text-muted-foreground">

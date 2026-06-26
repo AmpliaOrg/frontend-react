@@ -14,6 +14,7 @@ import {
   Loader2
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
+import { Badge } from "@/components/ui/badge";
 
 export default function DonorDashboard() {
   const { user } = useAuth();

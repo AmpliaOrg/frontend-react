@@ -40,7 +40,11 @@ export function Footer() {
               <li><a href="#" className="hover:text-primary transition-colors">Termos de Uso</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">Privacidade</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">Transparência</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Fale Conosco</a></li>
+              <li>
+                <Link href="/fale-conosco">
+                  <a className="hover:text-primary transition-colors">Fale Conosco</a>
+                </Link>
+              </li>
             </ul>
           </div>
 

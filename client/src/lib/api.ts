@@ -103,6 +103,14 @@ export interface Page<T> {
   number: number;
 }
 
+export interface OngLeadDTO {
+  name: string;
+  email: string;
+  cnpj: string;
+  phone: string;
+}
+
+
 // API Client
 class ApiClient {
   private getHeaders(): HeadersInit {
@@ -264,6 +272,14 @@ class ApiClient {
     
     return this.request<Page<UserProfileDTO>>(`/profiles/volunteers?${query.toString()}`);
   }
+
+  async createOngLead(data: OngLeadDTO): Promise<{ success: boolean }> {
+    return this.request<{ success: boolean }>('/ong-leads', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
 }
+
 
 export const api = new ApiClient();
