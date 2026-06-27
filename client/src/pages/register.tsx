@@ -128,8 +128,8 @@ export default function Register() {
       </div>
       <Card className="w-full max-w-2xl shadow-2xl">
         <CardHeader className="space-y-4 text-center">
-          <div className="mx-auto h-16 w-16 overflow-hidden rounded-full">
-            <img src={logo} alt="Amplia Logo" className="h-full w-full object-contain" />
+          <div className="mx-auto h-16 w-16 overflow-hidden rounded-full shrink-0 flex items-center justify-center">
+            <img src={logo} alt="Amplia Logo" className="h-16 w-16 object-contain" />
           </div>
           <div>
             <CardTitle className="text-3xl font-display font-bold">Criar Conta</CardTitle>
