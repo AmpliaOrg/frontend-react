@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import logo from "@assets/Amplia.svg";
+import { Logo } from "@/components/Logo";
 import { Facebook, Instagram, Twitter, Linkedin, Mail } from "lucide-react";
 
 export function Footer() {
@@ -13,7 +13,7 @@ export function Footer() {
             <Link href="/">
               <a className="flex items-center gap-2 transition-opacity hover:opacity-80">
                 <div className="h-8 w-8 overflow-hidden rounded-full shrink-0 flex items-center justify-center">
-                  <img src={logo} alt="Amplia Logo" className="h-8 w-8 object-contain" />
+                  <Logo className="h-8 w-8" />
                 </div>
                 <span className="font-display text-xl font-bold tracking-tight text-foreground">Amplia</span>
               </a>

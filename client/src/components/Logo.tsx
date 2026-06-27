@@ -1,0 +1,29 @@
+interface LogoProps {
+  className?: string;
+}
+
+export function Logo({ className = "h-10 w-10" }: LogoProps) {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 638 638" 
+      className={`${className} object-contain`}
+    >
+      <defs>
+        <clipPath id="circle-clip">
+          <circle cx="319" cy="319" r="319"/>
+        </clipPath>
+      </defs>
+      <g clipPath="url(#circle-clip)">
+        <circle cx="319" cy="319" r="319" fill="#7bbf92"/>
+      </g>
+      <g transform="translate(-401, -86)">
+        <path strokeLinecap="butt" transform="matrix(0, -0.75, 0.75, 0, 719.430906, 607.482709)" fill="none" strokeLinejoin="miter" d="M -0.00222075 5.998376 L 492.997804 5.998376" stroke="#ffffff" strokeWidth="12" strokeMiterlimit="4"/>
+        <path strokeLinecap="butt" transform="matrix(0.260216, -0.703411, 0.703411, 0.260216, 719.468946, 613.525357)" fill="none" strokeLinejoin="miter" d="M 0.0000127626 5.997275 L 470.182124 6.000779" stroke="#ffffff" strokeWidth="12" strokeMiterlimit="4"/>
+        <path strokeLinecap="butt" transform="matrix(-0.273605, -0.698313, 0.698313, -0.273605, 722.247738, 615.767149)" fill="none" strokeLinejoin="miter" d="M 0.000701415 6.000113 L 470.185362 6.000423" stroke="#ffffff" strokeWidth="12" strokeMiterlimit="4"/>
+        <path strokeLinecap="butt" transform="matrix(0.475301, -0.580163, 0.580163, 0.475301, 719.56269, 611.106541)" fill="none" strokeLinejoin="miter" d="M 0.000770502 5.998168 L 470.183961 6.001225" stroke="#ffffff" strokeWidth="12" strokeMiterlimit="4"/>
+        <path strokeLinecap="butt" transform="matrix(-0.483214, -0.573589, 0.573589, -0.483214, 719.984082, 614.321293)" fill="none" strokeLinejoin="miter" d="M -0.00000665693 6.000285 L 470.182856 5.999847" stroke="#ffffff" strokeWidth="12" strokeMiterlimit="4"/>
+      </g>
+    </svg>
+  );
+}

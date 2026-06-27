@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import logo from "@assets/Amplia.svg";
+import { Logo } from "@/components/Logo";
 
 interface NavItem {
   label: string;
@@ -52,7 +52,7 @@ export default function AppShell({ children, navItems, title }: AppShellProps) {
     <div className="flex flex-col h-full bg-sidebar-background border-r border-border">
       <div className="h-20 flex items-center gap-3 px-6 border-b border-border/40">
         <div className="h-8 w-8 overflow-hidden rounded-full shrink-0 flex items-center justify-center">
-          <img src={logo} alt="Amplia Logo" className="h-8 w-8 object-contain" />
+          <Logo className="h-8 w-8" />
         </div>
         <span className="font-display text-xl font-bold tracking-tight text-foreground">Amplia</span>
       </div>

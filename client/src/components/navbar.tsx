@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
-import logo from "@assets/Amplia.svg";
+import { Logo } from "@/components/Logo";
 import { useAuth } from "@/contexts/AuthContext";
 
 export function Navbar() {
@@ -31,7 +31,7 @@ export function Navbar() {
           <Link href="/">
             <a className="flex items-center gap-2 transition-opacity hover:opacity-80">
               <div className="h-10 w-10 overflow-hidden rounded-full shrink-0 flex items-center justify-center">
-                <img src={logo} alt="Amplia Logo" className="h-10 w-10 object-contain" />
+                <Logo className="h-10 w-10" />
               </div>
               <span className="font-display text-xl font-bold tracking-tight text-foreground">Amplia</span>
             </a>

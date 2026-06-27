@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
-import logo from "@assets/Amplia.svg";
+import { Logo } from "@/components/Logo";
 import { ArrowLeft } from "lucide-react";
 
 
@@ -78,7 +78,7 @@ export default function Login() {
       <Card className="w-full max-w-md shadow-2xl">
         <CardHeader className="space-y-4 text-center">
           <div className="mx-auto h-16 w-16 overflow-hidden rounded-full shrink-0 flex items-center justify-center">
-            <img src={logo} alt="Amplia Logo" className="h-16 w-16 object-contain" />
+            <Logo className="h-16 w-16" />
           </div>
           <div>
             <CardTitle className="text-3xl font-display font-bold">Bem-vindo</CardTitle>
