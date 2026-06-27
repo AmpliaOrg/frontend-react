@@ -23,6 +23,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { useToast } from "@/hooks/use-toast";
+import { ScrollReveal } from "@/components/ScrollReveal";
+
 
 const contactSchema = z.object({
   name: z.string().min(3, "Nome deve ter pelo menos 3 caracteres"),
@@ -85,9 +87,11 @@ export default function ContactUs() {
 
         <div className="grid gap-12 lg:grid-cols-12 items-start">
           {/* Left Column: Proposta e Link de E-mail */}
-          <div className="lg:col-span-6 space-y-8">
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
+          <div className="lg:col-span-6">
+            <ScrollReveal>
+              <div className="space-y-8">
+                <div className="space-y-4">
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
                 <HelpCircle className="h-4 w-4" />
                 <span>Central de Atendimento</span>
               </div>
@@ -143,11 +147,14 @@ export default function ContactUs() {
               </div>
             </div>
           </div>
+        </ScrollReveal>
+      </div>
 
           {/* Right Column: Contact Form */}
           <div className="lg:col-span-6">
-            <Card className="shadow-2xl border border-border overflow-hidden relative">
-              <div className="h-2 w-full bg-primary" />
+            <ScrollReveal delay={0.15}>
+              <Card className="shadow-2xl border border-border overflow-hidden relative">
+                <div className="h-2 w-full bg-primary" />
               
               <CardHeader className="space-y-2 p-6 md:p-8">
                 <CardTitle className="text-2xl font-bold font-display">Envie uma Mensagem</CardTitle>
@@ -269,7 +276,8 @@ export default function ContactUs() {
                   )}
                 </AnimatePresence>
               </CardContent>
-            </Card>
+              </Card>
+            </ScrollReveal>
           </div>
         </div>
       </main>

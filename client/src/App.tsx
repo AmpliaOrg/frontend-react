@@ -1,4 +1,6 @@
-import { Switch, Route } from "wouter";
+import { useEffect } from "react";
+import { Switch, Route, useLocation } from "wouter";
+
 
 import { queryClient } from "./lib/queryClient";
 import VolunteerLayout from "@/components/layouts/VolunteerLayout";
@@ -125,12 +127,26 @@ function Router() {
   );
 }
 
+function ScrollToTop() {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [location]);
+
+  return null;
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <TooltipProvider>
           <Toaster />
+          <ScrollToTop />
           <Router />
         </TooltipProvider>
       </AuthProvider>

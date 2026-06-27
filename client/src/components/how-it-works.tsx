@@ -3,10 +3,9 @@ import {
   Building2, 
   HeartHandshake, 
   CheckCircle2, 
-  BarChart3, 
-  Award 
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollReveal } from "./ScrollReveal";
 
 const features = [
   {
@@ -37,42 +36,46 @@ const features = [
 
 export function HowItWorks() {
   return (
-    <section id="como-funciona" className="py-24 bg-muted/50">
+    <section id="como-funciona" className="py-24 bg-muted/50 overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="mb-16 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl font-display">
-            Como a Amplia funciona
-          </h2>
-          <p className="mx-auto mt-4 max-w-[700px] text-lg text-muted-foreground">
-            Nossa plataforma conecta as três pontas essenciais do impacto social em um ecossistema transparente.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="mb-16 text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl font-display">
+              Como a Amplia funciona
+            </h2>
+            <p className="mx-auto mt-4 max-w-[700px] text-lg text-muted-foreground">
+              Nossa plataforma conecta as três pontas essenciais do impacto social em um ecossistema transparente.
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid gap-8 md:grid-cols-3">
-          {features.map((feature) => (
-            <Card key={feature.title} className="relative overflow-hidden border-none shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl">
-              <div className={`absolute top-0 right-0 h-32 w-32 -mr-8 -mt-8 rounded-full ${feature.bg} opacity-50 blur-2xl`}></div>
-              
-              <CardHeader>
-                <div className={`mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl ${feature.bg} ${feature.color}`}>
-                  <feature.icon className="h-7 w-7" />
-                </div>
-                <CardTitle className="text-2xl font-bold">{feature.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-6 text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
-                <ul className="space-y-3">
-                  {feature.benefits.map((benefit) => (
-                    <li key={benefit} className="flex items-center text-sm font-medium text-foreground/80">
-                      <CheckCircle2 className={`mr-2 h-4 w-4 ${feature.color}`} />
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+          {features.map((feature, index) => (
+            <ScrollReveal key={feature.title} delay={index * 0.15}>
+              <Card className="relative overflow-hidden border-none shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl h-full">
+                <div className={`absolute top-0 right-0 h-32 w-32 -mr-8 -mt-8 rounded-full ${feature.bg} opacity-50 blur-2xl`}></div>
+                
+                <CardHeader>
+                  <div className={`mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl ${feature.bg} ${feature.color}`}>
+                    <feature.icon className="h-7 w-7" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold">{feature.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="mb-6 text-muted-foreground leading-relaxed text-sm md:text-base">
+                    {feature.description}
+                  </p>
+                  <ul className="space-y-3">
+                    {feature.benefits.map((benefit) => (
+                      <li key={benefit} className="flex items-center text-sm font-medium text-foreground/80">
+                        <CheckCircle2 className={`mr-2 h-4 w-4 ${feature.color}`} />
+                        {benefit}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </ScrollReveal>
           ))}
         </div>
       </div>

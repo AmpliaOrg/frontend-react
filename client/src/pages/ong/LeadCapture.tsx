@@ -29,6 +29,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "@/lib/api";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 // CNPJ regex validation (accepts formatted or unformatted)
 const cnpjRegex = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/;
@@ -96,16 +97,18 @@ export default function LeadCapture() {
         </div>
 
         <div className="grid gap-12 lg:grid-cols-12 items-start">
-          {/* Left Column: Proposta de Valor e Mockup */}
-          <div className="lg:col-span-7 space-y-10">
-            <div className="space-y-4">
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-display text-foreground leading-[1.15]">
-                O impacto da sua ONG, <span className="text-primary relative inline-block">ampliado.<span className="absolute bottom-1 left-0 w-full h-[4px] bg-primary/30 rounded-full"></span></span>
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-[620px]">
-                A Amplia está criando um ecossistema projetado para simplificar a gestão de projetos, aproximar patrocinadores e automatizar o voluntariado.
-              </p>
-            </div>
+          <div className="lg:col-span-7">
+            <ScrollReveal>
+              <div className="space-y-10">
+                <div className="space-y-4">
+                  <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-display text-foreground leading-[1.15]">
+                    O impacto da sua ONG, <span className="text-primary relative inline-block">ampliado.<span className="absolute bottom-1 left-0 w-full h-[4px] bg-primary/30 rounded-full"></span></span>
+                  </h1>
+                  <p className="text-lg text-muted-foreground max-w-[620px]">
+                    A Amplia está criando um ecossistema projetado para simplificar a gestão de projetos, aproximar patrocinadores e automatizar o voluntariado.
+                  </p>
+                </div>
+
 
             {/* Benefícios em lista */}
             <div className="grid gap-6 md:grid-cols-2">
@@ -147,12 +150,15 @@ export default function LeadCapture() {
               </div>
             </div>
           </div>
+        </ScrollReveal>
+      </div>
 
-          {/* Right Column: Lead Form Card */}
-          <div className="lg:col-span-5">
-            <Card className="shadow-2xl border-2 border-primary/10 overflow-hidden relative">
-              {/* Decorative gradient top bar */}
-              <div className="h-2 w-full bg-gradient-to-r from-primary via-emerald-500 to-primary/80" />
+      {/* Right Column: Lead Form Card */}
+      <div className="lg:col-span-5">
+        <ScrollReveal delay={0.15}>
+          <Card className="shadow-2xl border-2 border-primary/10 overflow-hidden relative">
+            {/* Decorative gradient top bar */}
+            <div className="h-2 w-full bg-gradient-to-r from-primary via-emerald-500 to-primary/80" />
               
               <CardHeader className="space-y-2 p-6 md:p-8">
                 <CardTitle className="text-2xl font-bold font-display">Quero fazer parte</CardTitle>
@@ -277,9 +283,10 @@ export default function LeadCapture() {
                 </AnimatePresence>
               </CardContent>
             </Card>
-          </div>
+          </ScrollReveal>
         </div>
-      </main>
+      </div>
+    </main>
 
       <Footer />
     </div>
