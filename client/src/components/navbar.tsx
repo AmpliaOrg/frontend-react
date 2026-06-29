@@ -67,16 +67,12 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link href="/login">
-            <Button variant="ghost" className="hidden md:inline-flex">
-              Entrar
-            </Button>
-          </Link>
-          <Link href="/register">
-            <Button className="rounded-full px-6 font-semibold shadow-lg shadow-primary/20 transition-all hover:shadow-primary/40">
-              Cadastre-se
-            </Button>
-          </Link>
+          <Button variant="ghost" className="hidden md:inline-flex" disabled>
+            Entrar
+          </Button>
+          <Button className="rounded-full px-6 font-semibold shadow-lg shadow-primary/20 transition-all" disabled>
+            Cadastre-se
+          </Button>
         </div>
       </div>
     </nav>
