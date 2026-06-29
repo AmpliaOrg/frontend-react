@@ -27,10 +27,26 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4 text-foreground">Plataforma</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">Sobre nós</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Para ONGs</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Para Voluntários</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Para Empresas</a></li>
+              <li>
+                <Link href="/">
+                  <a className="hover:text-primary transition-colors">Sobre nós</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/ong/interesse">
+                  <a className="hover:text-primary transition-colors">Para ONGs</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/voluntario/interesse">
+                  <a className="hover:text-primary transition-colors">Para Voluntários</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/empresa/interesse">
+                  <a className="hover:text-primary transition-colors">Para Empresas</a>
+                </Link>
+              </li>
             </ul>
           </div>
 
