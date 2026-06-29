@@ -53,9 +53,21 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4 text-foreground">Legal</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">Termos de Uso</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Privacidade</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Transparência</a></li>
+              <li>
+                <Link href="/termos-de-uso">
+                  <a className="hover:text-primary transition-colors">Termos de Uso</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacidade">
+                  <a className="hover:text-primary transition-colors">Privacidade</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/transparencia">
+                  <a className="hover:text-primary transition-colors">Transparência</a>
+                </Link>
+              </li>
               <li>
                 <Link href="/fale-conosco">
                   <a className="hover:text-primary transition-colors">Fale Conosco</a>
@@ -74,7 +86,7 @@ export function Footer() {
               <a href="#" className="h-10 w-10 flex items-center justify-center rounded-full bg-background border border-border hover:border-primary hover:text-primary transition-colors shadow-sm">
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="#" className="h-10 w-10 flex items-center justify-center rounded-full bg-background border border-border hover:border-primary hover:text-primary transition-colors shadow-sm">
+              <a href="mailto:ampliaorg@gmail.com?subject=Contato%20Plataforma%20Amplia" className="h-10 w-10 flex items-center justify-center rounded-full bg-background border border-border hover:border-primary hover:text-primary transition-colors shadow-sm">
                 <Mail className="h-5 w-5" />
               </a>
             </div>

@@ -29,6 +29,9 @@ import LeadCapture from "@/pages/ong/LeadCapture";
 import ContactUs from "@/pages/contact";
 import VolunteerInterest from "@/pages/volunteer/Interest";
 import CompanyInterest from "@/pages/company/Interest";
+import TermsOfUse from "@/pages/terms";
+import PrivacyPolicy from "@/pages/privacy";
+import TransparencyPortal from "@/pages/transparency";
 import { ProtectedRouteWrapper } from "@/lib/protected-route";
 import { SecurityConstants } from "@/lib/security-constants";
 
@@ -42,6 +45,9 @@ function Router() {
       <Route path="/fale-conosco" component={ContactUs} />
       <Route path="/voluntario/interesse" component={VolunteerInterest} />
       <Route path="/empresa/interesse" component={CompanyInterest} />
+      <Route path="/termos-de-uso" component={TermsOfUse} />
+      <Route path="/privacidade" component={PrivacyPolicy} />
+      <Route path="/transparencia" component={TransparencyPortal} />
       
       {/* ONG Routes */}
       <Route path="/ong/dashboard">
