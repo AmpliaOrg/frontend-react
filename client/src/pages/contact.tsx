@@ -123,10 +123,10 @@ export default function ContactUs() {
               </div>
               <div className="relative z-10 pt-2">
                 <a 
-                  href="mailto:pf.lucasmoura@gmail.com?subject=Contato%20Plataforma%20Amplia"
+                  href="mailto:ampliaorg@gmail.com?subject=Contato%20Plataforma%20Amplia"
                   className="inline-flex items-center justify-center font-semibold text-primary hover:text-primary/80 transition-colors gap-2 group text-base"
                 >
-                  pf.lucasmoura@gmail.com
+                  ampliaorg@gmail.com
                   <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
                 </a>
               </div>
