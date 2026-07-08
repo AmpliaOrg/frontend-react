@@ -60,8 +60,8 @@ export function SocialProof() {
                     className="h-full w-full object-cover"
                   />
                   <div className="absolute top-4 left-4">
-                    <Badge className="bg-white/90 text-foreground hover:bg-white shadow-sm backdrop-blur-md">
-                      <CheckCircle className="mr-1 h-3 w-3 text-primary fill-white" />
+                    <Badge className="bg-white/90 dark:bg-card/90 text-foreground hover:bg-white dark:hover:bg-card shadow-sm backdrop-blur-md border border-border/20">
+                      <CheckCircle className="mr-1 h-3 w-3 text-primary fill-white dark:fill-card" />
                       ONG Verificada
                     </Badge>
                   </div>

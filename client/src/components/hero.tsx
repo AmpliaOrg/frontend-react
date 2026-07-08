@@ -3,11 +3,13 @@ import { ArrowRight, Heart, Briefcase, Building2 } from "lucide-react";
 import heroImage from "@assets/generated_images/muie.png";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
+import { InteractiveGrid } from "@/components/InteractiveGrid";
 
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-background pt-16 pb-24 md:pt-24 md:pb-32">
-      <div className="container mx-auto px-4 md:px-6">
+      <InteractiveGrid />
+      <div className="relative z-10 container mx-auto px-4 md:px-6">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 xl:gap-12 items-center">
           <div className="flex flex-col justify-center space-y-8">
             <motion.div 
