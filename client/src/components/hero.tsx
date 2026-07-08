@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Heart, Briefcase, Building2 } from "lucide-react";
+import { ArrowRight, Heart } from "lucide-react";
 import heroImage from "@assets/generated_images/muie.png";
 import { motion } from "framer-motion";
 import { Link } from "wouter";

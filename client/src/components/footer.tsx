@@ -47,6 +47,11 @@ export function Footer() {
                   <a className="hover:text-primary transition-colors">Para Empresas</a>
                 </Link>
               </li>
+              <li>
+                <Link href="/pricing">
+                  <a className="hover:text-primary transition-colors">Planos e Preços</a>
+                </Link>
+              </li>
             </ul>
           </div>
 
