@@ -34,7 +34,6 @@ export default function Login() {
     setIsLoading(true);
     try {
       const response = await login(data.email, data.password);
-      console.log("Login response:", response);
       toast({
         title: "Login realizado!",
         description: "Bem-vindo de volta.",

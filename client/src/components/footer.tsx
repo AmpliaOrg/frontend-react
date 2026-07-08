@@ -80,7 +80,7 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4 text-foreground">Fique por dentro</h3>
             <div className="flex gap-4 mb-6">
-              <a href="#" className="h-10 w-10 flex items-center justify-center rounded-full bg-background border border-border hover:border-primary hover:text-primary transition-colors shadow-sm">
+              <a href="https://www.instagram.com/ampliaorg?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-full bg-background border border-border hover:border-primary hover:text-primary transition-colors shadow-sm">
                 <Instagram className="h-5 w-5" />
               </a>
               <a href="#" className="h-10 w-10 flex items-center justify-center rounded-full bg-background border border-border hover:border-primary hover:text-primary transition-colors shadow-sm">
@@ -91,7 +91,7 @@ export function Footer() {
               </a>
             </div>
             <p className="text-xs text-muted-foreground">
-              © 2025 Amplia. Todos os direitos reservados.
+              © 2026 Amplia. Todos os direitos reservados.
             </p>
           </div>
         </div>
