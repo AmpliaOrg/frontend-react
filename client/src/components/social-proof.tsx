@@ -110,7 +110,7 @@ export function SocialProof() {
               <Card className="absolute -bottom-12 -left-8 w-72 shadow-xl border-none rounded-2xl hidden md:block animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="bg-blue-100 p-2 rounded-lg text-blue-600">
+                    <div className="bg-blue-100 dark:bg-blue-500/10 p-2 rounded-lg text-blue-600 dark:text-blue-400">
                       <Sprout className="h-5 w-5" />
                     </div>
                     <div>
@@ -118,7 +118,7 @@ export function SocialProof() {
                       <p className="text-xs text-muted-foreground">Vagas: 5 • Presencial</p>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" className="w-full text-xs h-8 rounded-lg hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200">
+                  <Button variant="outline" size="sm" className="w-full text-xs h-8 rounded-lg hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 dark:hover:bg-blue-500/10 dark:hover:text-blue-400 dark:hover:border-blue-500/30">
                     Inscrever-se
                   </Button>
                 </CardContent>

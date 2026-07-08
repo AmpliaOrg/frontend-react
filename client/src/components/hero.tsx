@@ -83,7 +83,7 @@ export function Hero() {
               />
               
               {/* Floating Badge */}
-              <div className="absolute bottom-4 left-4 right-4 z-20 rounded-2xl bg-white/95 p-4 backdrop-blur-sm shadow-xl border border-border/50 max-w-sm mx-auto lg:mx-0">
+              <div className="absolute bottom-4 left-4 right-4 z-20 rounded-2xl bg-white/95 dark:bg-card/95 p-4 backdrop-blur-sm shadow-xl border border-border/50 max-w-sm mx-auto lg:mx-0">
                 <div className="flex items-center gap-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <Heart className="h-6 w-6 fill-current" />

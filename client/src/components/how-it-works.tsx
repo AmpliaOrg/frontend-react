@@ -21,16 +21,16 @@ const features = [
     icon: HeartHandshake,
     description: "Conecte-se com propósitos reais. Encontre causas que combinam com você e receba certificados digitais.",
     benefits: ["Certificados automáticos", "Histórico de impacto", "Vagas personalizadas"],
-    color: "text-blue-600",
-    bg: "bg-blue-50"
+    color: "text-blue-600 dark:text-blue-400",
+    bg: "bg-blue-50 dark:bg-blue-500/10"
   },
   {
     title: "Empresas",
     icon: Building2,
     description: "Patrocínio rastreável e relatórios ESG. Apoie projetos validados e acompanhe cada centavo investido.",
     benefits: ["Relatórios de impacto", "Selo de parceiro", "Engajamento de colaboradores"],
-    color: "text-amber-600",
-    bg: "bg-amber-50"
+    color: "text-amber-600 dark:text-amber-400",
+    bg: "bg-amber-50 dark:bg-amber-500/10"
   }
 ];
 
