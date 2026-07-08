@@ -1,4 +1,4 @@
-import { ArrowLeft, Check, Sparkles, HeartHandshake, HelpCircle, ChevronDown, Percent } from "lucide-react";
+import { ArrowLeft, Check, Sparkles, HeartHandshake, HelpCircle, ChevronDown, Percent, Calculator } from "lucide-react";
 import { useLocation, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
@@ -122,6 +122,14 @@ export default function Pricing() {
                 <span className="text-xs text-muted-foreground block">ONG / Projeto (96,5%)</span>
                 <span className="text-lg font-bold text-foreground">R$ 193,00</span>
               </div>
+            </div>
+            <div className="pt-4">
+              <Link href="/pricing/calculadora">
+                <Button variant="outline" className="rounded-xl border-primary/20 hover:bg-primary/5 hover:text-primary cursor-pointer gap-2">
+                  <Calculator className="h-4 w-4" />
+                  Simular com outros valores
+                </Button>
+              </Link>
             </div>
           </div>
         </ScrollReveal>

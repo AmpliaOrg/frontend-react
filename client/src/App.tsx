@@ -33,6 +33,7 @@ import TermsOfUse from "@/pages/terms";
 import PrivacyPolicy from "@/pages/privacy";
 import TransparencyPortal from "@/pages/transparency";
 import Pricing from "@/pages/pricing";
+import ImpactCalculator from "@/pages/calculator";
 import { ProtectedRouteWrapper } from "@/lib/protected-route";
 import { SecurityConstants } from "@/lib/security-constants";
 
@@ -50,6 +51,7 @@ function Router() {
       <Route path="/privacidade" component={PrivacyPolicy} />
       <Route path="/transparencia" component={TransparencyPortal} />
       <Route path="/pricing" component={Pricing} />
+      <Route path="/pricing/calculadora" component={ImpactCalculator} />
       
       {/* ONG Routes */}
       <Route path="/ong/dashboard">
