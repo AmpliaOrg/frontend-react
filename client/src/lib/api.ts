@@ -1,5 +1,5 @@
 // API Base URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://backend-0mzx.onrender.com/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
 
 // Types
 export interface LoginRequest {
@@ -33,15 +33,32 @@ export interface AuthResponse {
 
 
 export interface DonationDTO {
-  guid?: string;
+  amount: number;       // Valor da doação em decimal (ex: 50.00 para R$ 50,00)
+  donorName: string;    // Nome do doador (Máximo 255 caracteres)
+  donorType: 'INDIVIDUAL' | 'CORPORATE'; // Tipo de doador: Pessoa Física ou Jurídica
+  groupId: number;      // ID da ONG destino (obrigatório)
+  projectGuid?: string; // UUID do projeto/campanha (Opcional)
+  notes?: string;       // Observações adicionais (Opcional - Máximo 1000 caracteres)
+}
+
+export interface DonationResponseModel {
+  guid: string;
   amount: number;
   donorName: string;
   donorType: 'INDIVIDUAL' | 'CORPORATE';
-  status?: 'PENDING' | 'CONFIRMED' | 'CANCELLED';
-  donationDate?: string;
+  status: 'PENDING' | 'CONFIRMED' | 'REFUNDED' | 'FAILED';
+  donationDate: string;
   groupId: number;
   projectGuid?: string;
+  userGuid: string;
   notes?: string;
+  checkoutUrl?: string;
+}
+
+export interface CheckoutResponseModel {
+  donationGuid: string;
+  checkoutUrl: string;
+  status: string;
 }
 
 export interface VolunteerDTO {
@@ -161,19 +178,35 @@ class ApiClient {
   }
 
   // Donations
-  async createDonation(data: DonationDTO): Promise<DonationDTO> {
-    return this.request<DonationDTO>('/donations', {
+  async createDonation(data: DonationDTO): Promise<DonationResponseModel> {
+    return this.request<DonationResponseModel>('/donations', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async getDonationsByGroup(groupId: number, page = 0, size = 10) {
-    return this.request(`/donations/group/${groupId}?page=${page}&size=${size}`);
+  async getDonationsByGroup(groupId: number, page = 0, size = 10): Promise<Page<any>> {
+    return this.request<Page<any>>(`/donations/group/${groupId}?page=${page}&size=${size}`);
   }
 
   async getTotalDonations(groupId: number): Promise<number> {
     return this.request<number>(`/donations/group/${groupId}/total`);
+  }
+
+  async getMyDonations(page = 0, size = 20, sort = 'createdAt,desc'): Promise<Page<any>> {
+    return this.request<Page<any>>(`/donations/my?page=${page}&size=${size}&sort=${sort}`);
+  }
+
+  async updateDonationStatus(guid: string, status: 'PENDING' | 'CONFIRMED' | 'REFUNDED' | 'FAILED'): Promise<DonationResponseModel> {
+    return this.request<DonationResponseModel>(`/donations/${guid}/status?status=${status}`, {
+      method: 'PATCH',
+    });
+  }
+
+  async createCheckout(donationGuid: string): Promise<CheckoutResponseModel> {
+    return this.request<CheckoutResponseModel>(`/donations/${donationGuid}/checkout`, {
+      method: 'POST',
+    });
   }
 
   // Volunteers
@@ -184,8 +217,8 @@ class ApiClient {
     });
   }
 
-  async getVolunteersByGroup(groupId: number, page = 0, size = 10) {
-    return this.request(`/volunteers/group/${groupId}?page=${page}&size=${size}`);
+  async getVolunteersByGroup(groupId: number, page = 0, size = 10): Promise<Page<any>> {
+    return this.request<Page<any>>(`/volunteers/group/${groupId}?page=${page}&size=${size}`);
   }
 
   async addVolunteerHours(guid: string, hours: number): Promise<VolunteerDTO> {
@@ -202,12 +235,29 @@ class ApiClient {
     });
   }
 
-  async getProjectsByGroup(groupId: number, page = 0, size = 10) {
-    return this.request(`/projects/group/${groupId}?page=${page}&size=${size}`);
+  async getProjectsByGroup(groupId: number, page = 0, size = 10): Promise<Page<any>> {
+    return this.request<Page<any>>(`/projects/group/${groupId}?page=${page}&size=${size}`);
   }
 
   async getProjectByGuid(guid: string): Promise<ProjectDTO> {
     return this.request<ProjectDTO>(`/projects/${guid}`);
+  }
+
+  async updateProject(guid: string, data: Partial<ProjectDTO>): Promise<ProjectDTO> {
+    return this.request<ProjectDTO>(`/projects/${guid}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async deleteProject(guid: string): Promise<void> {
+    await this.request<void>(`/projects/${guid}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async getProjectsByStatus(groupId: number, status: string, page = 0, size = 10): Promise<Page<any>> {
+    return this.request<Page<any>>(`/projects/group/${groupId}/status/${status}?page=${page}&size=${size}`);
   }
 
   // ONGs

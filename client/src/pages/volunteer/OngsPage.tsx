@@ -6,7 +6,8 @@ import { Building2, MapPin, ArrowRight, Loader2 } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function VolunteerOngsPage() {
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
+  const prefix = location.startsWith("/donor") ? "/donor" : "/volunteer";
   const { data: ongs, isLoading } = useQuery({
     queryKey: ["/api/ongs"],
     queryFn: () => api.getAllOngs(),
@@ -49,7 +50,7 @@ export default function VolunteerOngsPage() {
             </CardHeader>
             <CardContent>
               <Button 
-                onClick={() => setLocation(`/volunteer/ongs/${ong.id}`)}
+                onClick={() => setLocation(`${prefix}/ongs/${ong.id}`)}
                 className="w-full group"
               >
                 Ver Detalhes

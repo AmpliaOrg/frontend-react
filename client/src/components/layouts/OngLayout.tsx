@@ -12,7 +12,7 @@ export default function OngLayout({ children }: { children: React.ReactNode }) {
     { href: "/ong/dashboard", label: "Visão Geral", icon: LayoutDashboard },
     { href: "/ong/volunteers", label: "Voluntários", icon: Users },
     { href: "/ong/projects", label: "Meus Projetos", icon: Target },
-    { href: "/ong/donations", label: "Doações", icon: Heart },
+    { href: "/ong/donations", label: "Doações", icon: Heart, disabled: true, tag: "Em breve" },
     { href: "/ong/profile", label: "Perfil da ONG", icon: User },
   ];
 

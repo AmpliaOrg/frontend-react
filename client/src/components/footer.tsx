@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer className="bg-muted/30 border-t border-border/40 pt-16 pb-8">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid gap-12 md:grid-cols-4 mb-12">
+        <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mb-12">
           
           {/* Brand Column */}
           <div className="space-y-4">
@@ -47,9 +47,25 @@ export function Footer() {
                   <a className="hover:text-primary transition-colors">Para Empresas</a>
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-4 text-foreground">Produto</h3>
+            <ul className="space-y-3 text-sm text-muted-foreground">
               <li>
                 <Link href="/pricing">
                   <a className="hover:text-primary transition-colors">Planos e Preços</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/pricing/calculadora">
+                  <a className="hover:text-primary transition-colors">Calculadora de Impacto</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/backlog" className="hover:text-primary transition-colors">
+                  Roadmap & Backlog
                 </Link>
               </li>
             </ul>

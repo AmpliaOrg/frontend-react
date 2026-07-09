@@ -33,8 +33,11 @@ export function getPoliciesForRole(role: string): string[] {
     case 'USER':
       return [
         SecurityConstants.POLICY_PROJECT_READ,
+        SecurityConstants.POLICY_DONATION_READ,
         SecurityConstants.POLICY_DONATION_WRITE,
         SecurityConstants.POLICY_VOLUNTEER_READ,
+        SecurityConstants.POLICY_PROFILE_READ,
+        SecurityConstants.POLICY_PROFILE_WRITE,
       ];
       
     default:

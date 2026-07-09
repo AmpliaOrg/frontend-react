@@ -10,7 +10,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { toast } from 'sonner';
 import { Loader2, Save, Edit2, MapPin, Heart, DollarSign, User } from 'lucide-react';
 import { motion } from 'framer-motion';
-import DonorLayout from '@/components/layouts/DonorLayout';
 
 export default function DonorProfile() {
   const { user } = useAuth();
@@ -67,8 +66,7 @@ export default function DonorProfile() {
   }
 
   return (
-    <DonorLayout>
-      <div className="container mx-auto py-10 px-4 max-w-5xl">
+    <div className="container mx-auto py-10 px-4 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -220,6 +218,5 @@ export default function DonorProfile() {
           </form>
         </motion.div>
       </div>
-    </DonorLayout>
   );
 }

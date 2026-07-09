@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/AuthContext";
 import { api } from "@/lib/api";
@@ -7,9 +8,11 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CalendarDays, MapPin, Users, Target, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
+import DonationModal from "@/components/DonationModal";
 
 export default function VolunteerDashboard() {
   const { user } = useAuth();
+  const [selectedProject, setSelectedProject] = useState<{ guid: string; name: string; groupId: number } | null>(null);
   
   const { data: dashboard, isLoading } = useQuery({
     queryKey: ['volunteer-dashboard', user?.userId],
@@ -113,7 +116,12 @@ export default function VolunteerDashboard() {
                                     style={{ width: `${project.progressPercentage}%` }}
                                 />
                             </div>
-                            <Button className="w-full mt-4">Apoiar</Button>
+                             <Button 
+                               onClick={() => setSelectedProject({ guid: project.guid, name: project.name, groupId: project.groupId })}
+                               className="w-full mt-4 cursor-pointer"
+                             >
+                               Apoiar
+                             </Button>
                         </div>
                     </CardContent>
                 </Card>
@@ -175,6 +183,15 @@ export default function VolunteerDashboard() {
             </div>
         </div>
       </section>
+      {selectedProject && (
+        <DonationModal
+          isOpen={!!selectedProject}
+          onClose={() => setSelectedProject(null)}
+          projectGuid={selectedProject.guid}
+          projectName={selectedProject.name}
+          groupId={selectedProject.groupId}
+        />
+      )}
     </div>
   );
 }

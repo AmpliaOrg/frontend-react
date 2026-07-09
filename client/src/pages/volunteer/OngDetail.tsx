@@ -1,19 +1,33 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Building2, MapPin, Loader2, ArrowLeft, Heart, Globe, Mail, Phone } from "lucide-react";
+import { Building2, MapPin, Loader2, ArrowLeft, Heart, Globe, Mail, Phone, Target } from "lucide-react";
 import { useLocation, useParams } from "wouter";
+import { Skeleton } from "@/components/ui/skeleton";
+import DonationModal from "@/components/DonationModal";
 
 export default function VolunteerOngDetail() {
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
+  const prefix = location.startsWith("/donor") ? "/donor" : "/volunteer";
   const { id } = useParams();
+  const [selectedProject, setSelectedProject] = useState<{ guid: string; name: string; groupId: number } | null>(null);
 
   const { data: ong, isLoading } = useQuery({
     queryKey: [`/api/ongs/${id}`],
     queryFn: () => api.getOngById(id!),
     enabled: !!id,
   });
+
+  // Query active projects for this ONG
+  const { data: projectsPage, isLoading: isLoadingProjects } = useQuery({
+    queryKey: ['ong-detail-projects', id],
+    queryFn: () => api.getProjectsByStatus(Number(id), "ACTIVE", 0, 10),
+    enabled: !!id,
+  });
+
+  const projects = Array.isArray(projectsPage) ? projectsPage : (projectsPage?.content || []);
 
   if (isLoading) {
     return (
@@ -27,7 +41,7 @@ export default function VolunteerOngDetail() {
     return (
       <div className="text-center py-20">
         <p className="text-muted-foreground">ONG não encontrada.</p>
-        <Button variant="link" onClick={() => setLocation("/volunteer/ongs")}>
+        <Button variant="link" onClick={() => setLocation(`${prefix}/ongs`)}>
           Voltar para a lista
         </Button>
       </div>
@@ -35,10 +49,10 @@ export default function VolunteerOngDetail() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-10">
       <Button 
         variant="ghost" 
-        onClick={() => setLocation("/volunteer/ongs")}
+        onClick={() => setLocation(`${prefix}/ongs`)}
         className="mb-4"
       >
         <ArrowLeft className="mr-2 h-4 w-4" />
@@ -111,8 +125,78 @@ export default function VolunteerOngDetail() {
               </Card>
             </div>
           </section>
+
+          {/* Active Projects and Campaigns */}
+          <section className="space-y-4 pt-6 border-t border-border/40">
+            <h3 className="text-2xl font-bold font-display flex items-center gap-2">
+              <Target className="h-6 w-6 text-primary" />
+              Projetos e Campanhas Ativas
+            </h3>
+            {isLoadingProjects ? (
+              <div className="grid gap-4 sm:grid-cols-2">
+                {[1, 2].map((i) => (
+                  <Skeleton key={i} className="h-32 w-full rounded-xl" />
+                ))}
+              </div>
+            ) : projects.length > 0 ? (
+              <div className="grid gap-4 sm:grid-cols-2">
+                {projects.map((project: any) => {
+                  const progress = Math.min(
+                    100,
+                    Math.round(((project.currentAmount || 0) / (project.goalAmount || 1)) * 100)
+                  );
+                  return (
+                    <Card key={project.guid} className="border border-border/60 hover:border-primary/45 transition-colors overflow-hidden flex flex-col justify-between">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-base font-bold line-clamp-1">{project.name}</CardTitle>
+                        <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+                          {project.description || "Sem descrição disponível."}
+                        </p>
+                      </CardHeader>
+                      <CardContent className="space-y-3 pt-0">
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-2xs text-muted-foreground font-semibold">
+                            <span>Meta: R$ {project.goalAmount.toLocaleString("pt-BR")}</span>
+                            <span className="text-primary">{progress}%</span>
+                          </div>
+                          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-primary rounded-full"
+                              style={{ width: `${progress}%` }}
+                            />
+                          </div>
+                        </div>
+                        <Button 
+                          size="sm"
+                          onClick={() => setSelectedProject({ guid: project.guid, name: project.name, groupId: project.groupId })}
+                          className="w-full gap-1.5 text-xs font-bold cursor-pointer"
+                        >
+                          <Heart className="h-3.5 w-3.5 fill-current" />
+                          Doar via Pix
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">Esta organização não possui projetos ativos no momento.</p>
+            )}
+          </section>
         </div>
       </div>
+
+      {/* Donation Modal Trigger */}
+      {selectedProject && (
+        <DonationModal
+          isOpen={!!selectedProject}
+          onClose={() => setSelectedProject(null)}
+          projectGuid={selectedProject.guid}
+          projectName={selectedProject.name}
+          groupId={selectedProject.groupId}
+        />
+      )}
     </div>
   );
 }
+

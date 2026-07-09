@@ -13,6 +13,7 @@ import VolunteerOngDetail from "@/pages/volunteer/OngDetail";
 import DonorLayout from "@/components/layouts/DonorLayout";
 import DonorDashboard from "@/pages/donor/Dashboard";
 import DonorProfile from "@/pages/donor/Profile";
+import DonorDonationsPage from "@/pages/donor/DonationsPage";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +23,7 @@ import Home from "@/pages/home";
 import OngLayout from "@/components/layouts/OngLayout";
 import VolunteersPage from "@/pages/ong/VolunteersPage";
 import OngProfile from "@/pages/ong/Profile";
+import OngProjectsPage from "@/pages/ong/ProjectsPage";
 import Dashboard from "@/pages/dashboard";
 import Login from "@/pages/login";
 import Register from "@/pages/register";
@@ -34,6 +36,7 @@ import PrivacyPolicy from "@/pages/privacy";
 import TransparencyPortal from "@/pages/transparency";
 import Pricing from "@/pages/pricing";
 import ImpactCalculator from "@/pages/calculator";
+import BacklogPage from "@/pages/backlog";
 import { ProtectedRouteWrapper } from "@/lib/protected-route";
 import { SecurityConstants } from "@/lib/security-constants";
 
@@ -52,6 +55,7 @@ function Router() {
       <Route path="/transparencia" component={TransparencyPortal} />
       <Route path="/pricing" component={Pricing} />
       <Route path="/pricing/calculadora" component={ImpactCalculator} />
+      <Route path="/backlog" component={BacklogPage} />
       
       {/* ONG Routes */}
       <Route path="/ong/dashboard">
@@ -69,6 +73,13 @@ function Router() {
       <Route path="/ong/profile">
         <ProtectedRouteWrapper requiredPolicy={SecurityConstants.POLICY_PROFILE_READ} allowedRoles={['ONG', 'ADMIN']}>
             <OngProfile />
+        </ProtectedRouteWrapper>
+      </Route>
+      <Route path="/ong/projects">
+        <ProtectedRouteWrapper requiredPolicy={SecurityConstants.POLICY_PROJECT_READ} allowedRoles={['ONG', 'ADMIN']}>
+            <OngLayout>
+              <OngProjectsPage />
+            </OngLayout>
         </ProtectedRouteWrapper>
       </Route>
 
@@ -128,6 +139,27 @@ function Router() {
         <ProtectedRouteWrapper requiredPolicy={SecurityConstants.POLICY_PROFILE_READ} allowedRoles={['USER', 'ADMIN']}>
             <DonorLayout>
               <DonorProfile />
+            </DonorLayout>
+        </ProtectedRouteWrapper>
+      </Route>
+      <Route path="/donor/donations">
+        <ProtectedRouteWrapper requiredPolicy={SecurityConstants.POLICY_DONATION_READ} allowedRoles={['USER', 'COMPANY', 'ADMIN']}>
+            <DonorLayout>
+              <DonorDonationsPage />
+            </DonorLayout>
+        </ProtectedRouteWrapper>
+      </Route>
+      <Route path="/donor/ongs">
+        <ProtectedRouteWrapper requiredPolicy={SecurityConstants.POLICY_DONATION_WRITE} allowedRoles={['USER', 'ADMIN']}>
+            <DonorLayout>
+              <VolunteerOngsPage />
+            </DonorLayout>
+        </ProtectedRouteWrapper>
+      </Route>
+      <Route path="/donor/ongs/:id">
+        <ProtectedRouteWrapper requiredPolicy={SecurityConstants.POLICY_DONATION_WRITE} allowedRoles={['USER', 'ADMIN']}>
+            <DonorLayout>
+              <VolunteerOngDetail />
             </DonorLayout>
         </ProtectedRouteWrapper>
       </Route>

@@ -1,186 +1,234 @@
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { useAuth } from "@/contexts/AuthContext";
 import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
   Heart, 
-  TrendingUp, 
-  History as HistoryIcon, 
-  ArrowRight, 
-  DollarSign,
-  Building2,
-  Calendar,
-  Loader2
+  Target, 
+  Loader2,
+  Users,
+  History
 } from "lucide-react";
-import { Link, useLocation } from "wouter";
-import { Badge } from "@/components/ui/badge";
+import DonationModal from "@/components/DonationModal";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
 
 export default function DonorDashboard() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [, setLocation] = useLocation();
-  
-  // In a real scenario, we might have a specific endpoint for donor dashboard
-  // For now, let's reuse some existing logic or mock some data if needed
-  const { data: stats, isLoading } = useQuery({
-    queryKey: ['donor-stats', user?.userId],
-    queryFn: () => ({
-        totalDonated: 1250.00,
-        donationCount: 5,
-        lastDonationDate: "2026-06-01",
-        impactedLives: 12
-    }),
+  const [selectedProject, setSelectedProject] = useState<{ guid: string; name: string; groupId: number } | null>(null);
+
+  // Fetch real projects dynamically
+  const { data: projectsPage, isLoading: isLoadingProjects } = useQuery({
+    queryKey: ['donor-projects', user?.userId],
+    queryFn: () => api.getProjectsByGroup(1, 0, 10), // Default group ID 1
+    enabled: !!user?.userId,
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
+  // Fetch real donation history
+  const { data: donationsPage, isLoading: isLoadingDonations, error: donationsError } = useQuery({
+    queryKey: ['donor-my-donations', user?.userId],
+    queryFn: () => api.getMyDonations(0, 20),
+    enabled: !!user?.userId,
+    retry: false
+  });
+
+  // Handle errors (specifically 401 Unauthorized)
+  useEffect(() => {
+    if (donationsError) {
+      const errMsg = donationsError.message || '';
+      if (errMsg.includes('401') || errMsg.includes('Unauthorized')) {
+        toast.error("Sessão expirada. Por favor, faça login novamente.");
+        logout();
+        setLocation("/login");
+      } else {
+        toast.error("Erro ao carregar histórico de doações.");
+      }
+    }
+  }, [donationsError, logout, setLocation]);
+
+  const projects = projectsPage?.content || [];
+  const donations = donationsPage?.content || [];
 
   return (
-    <div className="space-y-8 pb-10">
+    <div className="space-y-12 pb-10">
       {/* Welcome Section */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-display font-bold">Bem-vindo, {user?.firstName || "Doador"}!</h1>
-          <p className="text-muted-foreground">Obrigado por ajudar a ampliar o impacto social hoje.</p>
+      <div className="space-y-2">
+        <h1 className="text-3xl font-display font-bold text-foreground">
+          Bem-vindo, {user?.firstName || "Doador"}! 👋
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+          Obrigado por apoiar a Amplia. Escolha um dos projetos ativos abaixo para realizar sua doação direta e segura via Pix (AbacatePay).
+        </p>
+      </div>
+
+      {/* Projects List */}
+      <section className="space-y-6">
+        <div className="flex items-center gap-2.5 pb-2 border-b border-border/40">
+          <Target className="h-5 w-5 text-primary" />
+          <h2 className="text-xl font-bold font-heading text-foreground">Projetos Ativos</h2>
         </div>
-        <Button 
-            onClick={() => setLocation("/volunteer/ongs")}
-            className="rounded-full shadow-lg shadow-primary/20"
-        >
-            Nova Doação
-            <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
 
-      {/* Stats Cards */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="border-none shadow-sm bg-primary/5">
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Total Doado</CardTitle>
-            <DollarSign className="h-4 w-4 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">R$ {stats?.totalDonated.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground mt-1">+15% em relação ao mês anterior</p>
-          </CardContent>
-        </Card>
+        {isLoadingProjects ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <Card key={i} className="overflow-hidden">
+                <Skeleton className="h-32 w-full" />
+                <CardHeader className="space-y-2">
+                  <Skeleton className="h-6 w-3/4" />
+                  <Skeleton className="h-4 w-full" />
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <Skeleton className="h-4 w-1/2" />
+                  <Skeleton className="h-10 w-full" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : projects.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project: any) => {
+              const progress = Math.min(
+                100,
+                Math.round(((project.currentAmount || 0) / (project.goalAmount || 1)) * 100)
+              );
+              return (
+                <Card key={project.guid} className="group overflow-hidden border border-border/60 hover:border-primary/40 transition-all duration-300">
+                  <div className="h-28 bg-muted/40 group-hover:bg-muted/60 transition-colors flex items-center justify-center border-b border-border/30">
+                    <Users className="w-10 h-10 text-muted-foreground/30 group-hover:scale-110 transition-transform duration-300" />
+                  </div>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg line-clamp-1">{project.name}</CardTitle>
+                    <CardDescription className="line-clamp-2 text-sm">{project.description || "Sem descrição disponível."}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>Meta: R$ {project.goalAmount?.toLocaleString("pt-BR") || "0"}</span>
+                        <span className="text-primary font-bold">{progress}%</span>
+                      </div>
+                      <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-primary rounded-full transition-all duration-500"
+                          style={{ width: `${progress}%` }}
+                        />
+                      </div>
+                    </div>
+                    <Button 
+                      onClick={() => setSelectedProject({ guid: project.guid!, name: project.name, groupId: project.groupId })}
+                      className="w-full gap-2 cursor-pointer font-semibold"
+                    >
+                      <Heart className="h-4 w-4" />
+                      Apoiar via Pix
+                    </Button>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-16 bg-muted/20 rounded-3xl border border-dashed border-border/40">
+            <Heart className="h-12 w-12 mx-auto text-muted-foreground/45 mb-3" />
+            <h3 className="text-lg font-bold text-foreground">Nenhum projeto ativo no momento</h3>
+            <p className="text-muted-foreground text-sm max-w-sm mx-auto mt-1">
+              Volte mais tarde para ver novos projetos cadastrados pelas ONGs parceiras.
+            </p>
+          </div>
+        )}
+      </section>
 
-        <Card className="border-none shadow-sm bg-purple-500/5">
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Vidas Impactadas</CardTitle>
-            <Heart className="h-4 w-4 text-purple-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+{stats?.impactedLives}</div>
-            <p className="text-xs text-muted-foreground mt-1">Baseado nos projetos apoiados</p>
-          </CardContent>
-        </Card>
+      {/* Donation History Section */}
+      <section className="space-y-6">
+        <div className="flex items-center gap-2.5 pb-2 border-b border-border/40">
+          <History className="h-5 w-5 text-primary" />
+          <h2 className="text-xl font-bold font-heading text-foreground">Histórico de Doações</h2>
+        </div>
 
-        <Card className="border-none shadow-sm bg-blue-500/5">
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Doações Realizadas</CardTitle>
-            <HistoryIcon className="h-4 w-4 text-blue-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.donationCount}</div>
-            <p className="text-xs text-muted-foreground mt-1">Este ano</p>
-          </CardContent>
-        </Card>
+        {isLoadingDonations ? (
+          <div className="space-y-3">
+            {[1, 2].map((i) => (
+              <Skeleton key={i} className="h-16 w-full rounded-xl" />
+            ))}
+          </div>
+        ) : donations.length > 0 ? (
+          <div className="space-y-3">
+            {donations.map((donation: any) => {
+              // Status formatting
+              const getStatusBadge = (status: string) => {
+                switch (status) {
+                  case "CONFIRMED":
+                    return <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold bg-emerald-500/10 text-emerald-500 uppercase tracking-wider">Confirmado</span>;
+                  case "PENDING":
+                    return <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold bg-amber-500/10 text-amber-500 uppercase tracking-wider">Pendente</span>;
+                  case "FAILED":
+                    return <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold bg-rose-500/10 text-rose-500 uppercase tracking-wider">Falhou</span>;
+                  case "REFUNDED":
+                    return <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold bg-slate-500/10 text-slate-500 uppercase tracking-wider">Reembolsado</span>;
+                  default:
+                    return <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold bg-slate-500/10 text-slate-500 uppercase tracking-wider">{status}</span>;
+                }
+              };
 
-        <Card className="border-none shadow-sm bg-emerald-500/5">
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium">Nível de Impacto</CardTitle>
-            <TrendingUp className="h-4 w-4 text-emerald-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">Doador Prata</div>
-            <p className="text-xs text-muted-foreground mt-1">Próximo nível: Doador Ouro</p>
-          </CardContent>
-        </Card>
-      </div>
+              const donationDateStr = donation.donationDate || donation.createdAt;
+              const formattedDate = donationDateStr 
+                ? new Date(donationDateStr).toLocaleString("pt-BR") 
+                : "Recentemente";
 
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {/* Recent Donations */}
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Doações Recentes</CardTitle>
-            <CardDescription>Acompanhe o status dos seus últimos apoios.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {[
-                { name: "Hortas Sustentáveis", amount: 250.00, date: "01/06/2026", status: "Confirmado" },
-                { name: "Educação para Todos", amount: 500.00, date: "15/05/2026", status: "Confirmado" },
-                { name: "Reflorestamento Ativo", amount: 100.00, date: "02/05/2026", status: "Confirmado" },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center justify-between p-4 bg-muted/30 rounded-xl hover:bg-muted/50 transition-colors">
+              return (
+                <div 
+                  key={donation.guid} 
+                  className="flex items-center justify-between p-4 bg-card border border-border/60 hover:border-border rounded-xl transition-all duration-200"
+                >
                   <div className="flex items-center gap-4">
-                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                      <Building2 className="h-5 w-5" />
+                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      <Heart className="h-5 w-5 fill-primary/15" />
                     </div>
                     <div>
-                      <p className="font-semibold">{item.name}</p>
-                      <p className="text-xs text-muted-foreground">{item.date}</p>
+                      <p className="font-bold text-sm text-foreground">
+                        {donation.notes || "Doação para projeto social"}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Realizada em: {formattedDate}
+                      </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-bold text-primary">R$ {item.amount.toFixed(2)}</p>
-                    <p className="text-xs text-emerald-600 font-medium">{item.status}</p>
+                  
+                  <div className="flex items-center gap-4 shrink-0 text-right">
+                    <div>
+                      <p className="font-extrabold text-primary text-base">
+                        R$ {donation.amount.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      </p>
+                    </div>
+                    {getStatusBadge(donation.status)}
                   </div>
                 </div>
-              ))}
-            </div>
-            <Button variant="ghost" className="w-full mt-4 text-muted-foreground">
-              Ver histórico completo
-            </Button>
-          </CardContent>
-        </Card>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-12 bg-muted/20 rounded-3xl border border-dashed border-border/40">
+            <Heart className="h-12 w-12 mx-auto text-muted-foreground/35 mb-3" />
+            <h3 className="text-lg font-bold text-foreground">Nenhuma doação encontrada</h3>
+            <p className="text-muted-foreground text-sm max-w-sm mx-auto mt-1">
+              Você ainda não realizou nenhuma doação. Apoie um projeto ativo acima para começar!
+            </p>
+          </div>
+        )}
+      </section>
 
-        {/* Suggested Causes */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Causas Recomendadas</CardTitle>
-            <CardDescription>Projetos alinhados ao seu perfil.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-4">
-               <div className="group cursor-pointer">
-                  <div className="relative h-32 rounded-xl overflow-hidden mb-3">
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=400" alt="Educação" className="w-full h-full object-cover" />
-                    <Badge className="absolute top-2 left-2 bg-white/90 text-foreground">Educação</Badge>
-                  </div>
-                  <h4 className="font-bold text-sm">Escola Aberta Digital</h4>
-                  <p className="text-xs text-muted-foreground mt-1">85% da meta atingida</p>
-                  <div className="h-1.5 bg-muted rounded-full mt-2 overflow-hidden">
-                    <div className="h-full bg-primary w-[85%]" />
-                  </div>
-               </div>
-
-               <div className="group cursor-pointer">
-                  <div className="relative h-32 rounded-xl overflow-hidden mb-3">
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=400" alt="Meio Ambiente" className="w-full h-full object-cover" />
-                    <Badge className="absolute top-2 left-2 bg-white/90 text-foreground">Ambiental</Badge>
-                  </div>
-                  <h4 className="font-bold text-sm">Plantando o Amanhã</h4>
-                  <p className="text-xs text-muted-foreground mt-1">40% da meta atingida</p>
-                  <div className="h-1.5 bg-muted rounded-full mt-2 overflow-hidden">
-                    <div className="h-full bg-primary w-[40%]" />
-                  </div>
-               </div>
-            </div>
-            <Button variant="outline" className="w-full" onClick={() => setLocation("/volunteer/ongs")}>
-                Explorar Causas
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+      {/* Donation Modal Trigger */}
+      {selectedProject && (
+        <DonationModal
+          isOpen={!!selectedProject}
+          onClose={() => setSelectedProject(null)}
+          projectGuid={selectedProject.guid}
+          projectName={selectedProject.name}
+          groupId={selectedProject.groupId}
+        />
+      )}
     </div>
   );
 }

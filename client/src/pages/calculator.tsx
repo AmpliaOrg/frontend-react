@@ -16,9 +16,10 @@ export default function ImpactCalculator() {
 
   // Math variables
   const takeRate = 0.035; // 3.5%
-  const ampliaFee = Math.round(donationVolume * takeRate);
-  const ngoNet = donationVolume - ampliaFee;
+  const fixedFee = 0.90; // R$ 0,90
   const donationCount = Math.round(donationVolume / averageDonation);
+  const ampliaFee = Math.round((donationVolume * takeRate) + (donationCount * fixedFee));
+  const ngoNet = donationVolume - ampliaFee;
 
   // Projections
   const annualVolume = donationVolume * 12;
@@ -124,7 +125,7 @@ export default function ImpactCalculator() {
               <CardHeader className="space-y-1">
                 <div className="inline-flex h-6 items-center justify-center rounded-full bg-primary/10 px-2.5 text-xs font-bold text-primary gap-1">
                   <Percent className="h-3.5 w-3.5" />
-                  Divisão de Recursos (3,5%)
+                  Divisão de Recursos (3,5% + R$ 0,90)
                 </div>
                 <CardTitle className="text-2xl font-bold font-display pt-2">Detalhamento</CardTitle>
               </CardHeader>
@@ -135,7 +136,7 @@ export default function ImpactCalculator() {
                   <p className="text-3xl font-extrabold text-foreground mt-1 tabular-nums">
                     R$ {ngoNet.toLocaleString("pt-BR")}
                   </p>
-                  <span className="text-xs text-muted-foreground">96,5% do total arrecadado</span>
+                  <span className="text-xs text-muted-foreground">Líquido direto para o projeto social</span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
@@ -261,7 +262,7 @@ export default function ImpactCalculator() {
                   <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-open:rotate-180" />
                 </summary>
                 <div className="px-6 pb-4 pt-1 text-sm text-muted-foreground border-t border-border/50 leading-relaxed">
-                  A taxa de 3,5% é processada e retida automaticamente na liquidação de cada transação de doação realizada pelos voluntários através da plataforma. Você recebe os 96,5% diretamente na conta bancária cadastrada da sua ONG.
+                  A taxa de 3,5% + R$ 0,90 é processada e retida automaticamente na liquidação de cada transação de doação realizada através da plataforma. O restante do valor líquido é transferido diretamente para a conta bancária cadastrada da sua ONG.
                 </div>
               </details>
 

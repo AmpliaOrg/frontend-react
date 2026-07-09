@@ -51,7 +51,7 @@ export default function Pricing() {
               
               <CardHeader className="text-center space-y-2 pt-6">
                 <div className="pt-2">
-                  <span className="text-6xl font-extrabold text-foreground font-display">3,5%</span>
+                  <span className="text-5xl font-extrabold text-foreground font-display">3,5% + R$ 0,90</span>
                   <span className="text-muted-foreground text-lg font-medium"> / por doação</span>
                 </div>
                 <CardDescription className="text-base leading-relaxed max-w-md mx-auto pt-2">
@@ -111,16 +111,16 @@ export default function Pricing() {
             </div>
             <h3 className="text-xl font-bold text-foreground">Como funciona a divisão?</h3>
             <p className="text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              De forma prática: se a sua ONG receber uma doação de <strong>R$ 200,00</strong>, apenas <strong>R$ 7,00 (3,5%)</strong> ficam com a Amplia para cobrir custos de infraestrutura e manutenção. O restante <strong>R$ 193,00 (96,5%)</strong> vai direto para o seu projeto social.
+              De forma prática: se a sua ONG receber uma doação de <strong>R$ 200,00</strong>, a taxa será de <strong>R$ 7,90</strong> (3,5% do valor doado, que equivale a R$ 7,00, acrescido da taxa fixa de R$ 0,90). O restante <strong>R$ 192,10</strong> vai direto para o seu projeto social.
             </p>
             <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto pt-2">
               <div className="p-3 bg-card border border-border rounded-xl">
-                <span className="text-xs text-muted-foreground block">Amplia (3,5%)</span>
-                <span className="text-lg font-bold text-primary">R$ 7,00</span>
+                <span className="text-xs text-muted-foreground block">Amplia (3,5% + R$ 0,90)</span>
+                <span className="text-lg font-bold text-primary">R$ 7,90</span>
               </div>
               <div className="p-3 bg-card border border-border rounded-xl">
-                <span className="text-xs text-muted-foreground block">ONG / Projeto (96,5%)</span>
-                <span className="text-lg font-bold text-foreground">R$ 193,00</span>
+                <span className="text-xs text-muted-foreground block">ONG / Projeto</span>
+                <span className="text-lg font-bold text-foreground">R$ 192,10</span>
               </div>
             </div>
             <div className="pt-4">

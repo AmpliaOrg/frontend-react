@@ -19,6 +19,8 @@ interface NavItem {
   label: string;
   href: string;
   icon: LucideIcon;
+  disabled?: boolean;
+  tag?: string;
 }
 
 interface AppShellProps {
@@ -63,13 +65,23 @@ export default function AppShell({ children, navItems, title }: AppShellProps) {
             key={item.href}
             variant={isActive(item.href) ? "secondary" : "ghost"}
             className={cn(
-              "w-full justify-start text-base font-medium",
-              !isActive(item.href) && "text-muted-foreground hover:text-foreground"
+              "w-full justify-start text-base font-medium relative",
+              !isActive(item.href) && "text-muted-foreground hover:text-foreground",
+              item.disabled && "opacity-50 cursor-not-allowed hover:bg-transparent hover:text-muted-foreground"
             )}
-            onClick={() => handleNavigation(item.href)}
+            onClick={() => {
+              if (item.disabled) return;
+              handleNavigation(item.href);
+            }}
+            disabled={item.disabled}
           >
             <item.icon className="mr-3 h-5 w-5" />
-            {item.label}
+            <span className="flex-1 text-left">{item.label}</span>
+            {item.tag && (
+              <span className="ml-2 text-[9px] font-bold bg-primary/10 text-primary px-1.5 py-0.5 rounded-full shrink-0 uppercase tracking-wider">
+                {item.tag}
+              </span>
+            )}
           </Button>
         ))}
       </div>
